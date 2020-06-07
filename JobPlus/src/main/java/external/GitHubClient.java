@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -76,6 +77,19 @@ public class GitHubClient {
 	
 	private List<Item> getItemList(JSONArray array) {
 		List<Item> itemList = new ArrayList<>();
+		List<String> descriptionList = new ArrayList<>();
+		
+		for(int i = 0; i < array.length(); i++) {
+			String description = getStringFieldOrEmpty(array.getJSONObject(i), "description");
+			if(description.contentEquals("") || description.equals("\n")) {
+				descriptionList.add(getStringFieldOrEmpty(array.getJSONObject(i), "title"));
+			} else {
+				descriptionList.add(tagFilter(description));
+			}
+		}
+		
+		List<List<String>> keywords = MonkeyLearnClient.extractKeywords(descriptionList.toArray(new String[descriptionList.size()]));
+		
 		for(int i = 0; i < array.length(); i++) {
 			JSONObject object = array.getJSONObject(i);
 			
@@ -84,6 +98,7 @@ public class GitHubClient {
 				       .setAddress(getStringFieldOrEmpty(object, "location"))
 				       .setUrl(getStringFieldOrEmpty(object, "url"))
 				       .setImageUrl(getStringFieldOrEmpty(object, "company_logo"))
+				       .setKeywords(new HashSet<String>(keywords.get(i)))
 				       .build();
 			itemList.add(item);
 		}
@@ -92,5 +107,32 @@ public class GitHubClient {
 	
 	private String getStringFieldOrEmpty(JSONObject obj, String field) {
 		return obj.isNull(field) ? "" : obj.getString(field);
+	}
+	
+	private String tagFilter(String description) {
+		StringBuilder builder = new StringBuilder(description);
+		int i = 0; // i is the current index to be put 
+		int j = 0; // j is the current index to be checked
+		int left = 0; // the number of <
+		
+		while(j < builder.length()) {
+			if(left == 0 && builder.charAt(j) != '<' && builder.charAt(j) != '>' && builder.charAt(j) != '\\') {
+				builder.setCharAt(i, builder.charAt(j));
+				i++;
+				j++;
+			} else if(builder.charAt(j) == '<') {
+				left++;
+				j++;
+			} else if(left > 0) {
+				if(builder.charAt(j) == '>') {
+					left--;
+				} 
+				j++;
+			} else if(builder.charAt(j) == '\\') {
+				j += 2;
+			}
+		}
+		
+		return builder.substring(0, i);
 	}
 }
