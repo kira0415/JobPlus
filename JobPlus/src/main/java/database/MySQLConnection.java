@@ -11,9 +11,17 @@ import java.util.Set;
 import entity.Item;
 import entity.Item.ItemBuilder;
 
+/**
+ * This class is client to mysql database
+ * @author Kira
+ *
+ */
 public class MySQLConnection {
 	private Connection conn;
 	
+	/**
+	 * creating connection
+	 */
 	public MySQLConnection() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
@@ -24,6 +32,9 @@ public class MySQLConnection {
 		}
 	}
 	
+	/**
+	 * closing connection
+	 */
 	public void close() {
 		if(conn != null) {
 			try {
@@ -35,6 +46,11 @@ public class MySQLConnection {
 		}
 	}
 	
+	/**
+	 * Insert userid and selected item into table
+	 * @param userId - the user selected item
+	 * @param item - the selected item
+	 */
 	public void setFavoriteItems(String userId, Item item) {
 		if(conn == null) {
 			System.err.println("DB connection failed");
@@ -52,6 +68,11 @@ public class MySQLConnection {
 		}
 	}
 	
+	/**
+	 * Delete user id and selected item from table
+	 * @param userId - the user selected item
+	 * @param itemId - selected item id
+	 */
 	public void unsetFavoriteItems(String userId, String itemId) {
 		if(conn == null) {
 			System.err.println("DB connection failed");
@@ -68,6 +89,10 @@ public class MySQLConnection {
 		}
 	}
 	
+	/**
+	 * Insert selected item into table items
+	 * @param item - selected item
+	 */
 	public void saveItem(Item item) {
 		if(conn == null) {
 			System.err.println("DB connection failed");
@@ -95,6 +120,11 @@ public class MySQLConnection {
 		}
 	}
 	
+	/**
+	 * Got the user's favorite item id set
+	 * @param userId - authorized user
+	 * @return set of user's selected item id
+	 */
 	public Set<String> getFavoriteItemIds(String userId) {
 		if(conn == null) {
 			System.err.println("DB connection failed");
@@ -118,6 +148,11 @@ public class MySQLConnection {
 		return favoriteItems;
 	}
 	
+	/**
+	 * Got the user's favorite item set
+	 * @param userId - authorized user
+	 * @return set of user's selected item
+	 */
 	public Set<Item> getFavoriteItems(String userId) {
 		if(conn == null) {
 			System.err.println("DB connection failed");
@@ -150,6 +185,11 @@ public class MySQLConnection {
 		return favoriteItems;
 	}
 	
+	/**
+	 * Got item keywords set
+	 * @param itemId - selected item id
+	 * @return set of keywords
+	 */
 	public Set<String> getKeywords(String itemId) {
 		if(conn == null) {
 			System.err.println("DB connection failed");
@@ -169,5 +209,91 @@ public class MySQLConnection {
 			e.printStackTrace();
 		}
 		return keywords;
+	}
+	
+	/**
+	 * Got full name of user
+	 * @param userId - authorized user 
+	 * @return string full name of user
+	 */
+	public String getFullname(String userId) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+			return "";
+		}
+		
+		String name = "";
+		String sql = "SELECT first_name, last_name FROM users WHERE user_id = ?";
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, userId);
+			ResultSet rs = statement.executeQuery();
+			if(rs.next()) {
+				name = rs.getString("first_name") + " " + rs.getString("last_name");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return name;
+	}
+	
+	/**
+	 * Checking if user is register
+	 * @param userId - user input id
+	 * @param password - unser input password
+	 * @return true for match in database, otherwise false
+	 */
+	public boolean verifyLogin(String userId, String password) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+			return false;
+		}
+		
+		String sql = "SELECT user_id FROM users WHERE user_id = ? AND password = ?";
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, userId);
+			statement.setString(2, password);
+			ResultSet rs = statement.executeQuery();
+			if(rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	/**
+	 * Insert registered user into database
+	 * @param userId - user input id
+	 * @param password - user input password
+	 * @param firstname - user's firstname
+	 * @param lastname - user's lastname
+	 * @return true for successfully insert. otherwise false
+	 */
+	public boolean addUser(String userId, String password, String firstname, String lastname) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+			return false;
+		}
+		
+		String sql = "INSERT IGNORE INTO users VALUE (?,?,?,?)";
+		PreparedStatement statement;
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, userId);
+			statement.setString(2, password);
+			statement.setString(3, firstname);
+			statement.setString(4, lastname);
+			
+			return statement.executeUpdate() == 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

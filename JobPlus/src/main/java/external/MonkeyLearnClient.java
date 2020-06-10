@@ -34,7 +34,7 @@ public class MonkeyLearnClient {
 		
 		MonkeyLearn ml = new MonkeyLearn(API_KEY);
 		
-		ExtraParam[] extraParams = {new ExtraParam("max_keywords", "3")};
+		ExtraParam[] extraParams = {new ExtraParam("max_keywords", "6")};
 		MonkeyLearnResponse response;
 		try {
 			response = ml.extractors.extract("ex_YCya9nrn", text, extraParams);
