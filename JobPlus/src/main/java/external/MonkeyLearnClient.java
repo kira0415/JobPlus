@@ -12,7 +12,7 @@ import com.monkeylearn.MonkeyLearnException;
 import com.monkeylearn.MonkeyLearnResponse;
 
 public class MonkeyLearnClient {
-	private static final String API_KEY = "14412b5ebe230f51930b437932e84778376d98e4";
+	private static final String API_KEY = "262eb4f873f245bcd86542248d6a403f6a4323af";
 	
 //	public static void main(String[] args) {
 //
