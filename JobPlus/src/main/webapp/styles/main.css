@@ -1,0 +1,349 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: 
+    url(http://clipart-library.com/images_k/olive-branch-transparent/olive-branch-transparent-12.png);
+  color: #000000;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 300;
+  font-size: 0.9em;
+}
+
+ul {
+  list-style: none;
+}
+
+/**
+ * top header
+ */
+.top-header {
+  align-items: center;
+  background: #42d4b9;
+  box-shadow: 0px 2px 10px #2b6e6a;
+  display: flex;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.avatar {
+  background: #BFFFFB;
+  border-radius: 50%;
+  color: #333C4D;
+  height: 40px;
+  width: 40px;
+  margin-right: 20px;
+  padding-left: 9px;
+  padding-top: 5px;
+}
+
+#logout-link {
+	padding-left: 10px;
+	color: white;
+}
+/**
+ * top navigation
+ */
+.top-nav {
+  flex-grow: 1;
+}
+
+.top-nav a {
+  color: #243837;
+  font-weight: 1000;
+  font-size: 1.2em;
+  margin-left: 20px;
+  text-decoration: none;
+}
+
+#welcome-msg {
+  border-right: 1px solid #FFFFFF;
+  padding-right: 10px;
+}
+
+/**
+ * main container
+ */
+.container {
+  margin: 60px auto;
+  max-width: 1000px;
+  min-width: 600px;
+}
+
+/**
+ * main header
+ */
+.container>header{
+  background:linear-gradient(180deg, rgba(66,212,185,0.7), rgba(191, 255, 251,0.4));
+  background-size: 100%;
+  display: flex;
+  align-items: center;
+  height: 250px;
+}
+
+.container> header p {
+  border-left: 1px solid #000000;
+  font-weight: 800;
+  font-size: 2em;
+  line-height: 1em;
+  margin-left: 220px;
+  padding-left: 5px;
+  color: #00a39b;
+}
+
+.container>header span {
+  color: #006b64;
+}
+
+/**
+ * login form
+ */
+#login-form {
+	color: #624630;
+	margin: 0px auto;
+	overflow: auto;
+	padding: 40px;
+	width: 350px;
+}
+
+#login-form label {
+	display: block;
+}
+
+#login-form input {
+	border: none;
+	display: block;
+	margin-bottom: 10px;
+	padding: 8px;
+	width: 100%;
+}
+
+#login-form #login-btn {
+	cursor: pointer;
+	float: right;
+	padding: 8px 20px;
+	text-align: right;
+}
+
+#login-form #register-form-btn {
+	cursor: pointer;
+	float: left;
+	padding: 8px 10px;
+	text-align: left;
+}
+
+#login-error {
+	clear: both;
+	color: #990000;
+	padding-top: 10px;
+}
+
+/**
+ * register form
+ */
+#register-form {
+	color: #624630;
+	margin: 0px auto;
+	overflow: auto;
+	padding: 40px;
+	width: 350px;
+}
+
+#register-form label {
+	display: block;
+}
+
+#register-form input {
+	border: none;
+	display: block;
+	margin-bottom: 10px;
+	padding: 8px;
+	width: 100%;
+}
+
+#register-form #login-form-btn {
+	cursor: pointer;
+	float: left;
+	padding: 8px 10px;
+	text-align: left;
+}
+
+#register-form #register-btn {
+	cursor: pointer;
+	float: right;
+	padding: 8px 20px;
+	text-align: right;
+}
+
+#register-result {
+	clear: both;
+	color: #990000;
+	padding-top: 10px;
+}
+
+/**
+ * main section
+ */
+.main-section {
+  border: 1px solid #333C4D;
+  background: linear-gradient(180deg, rgba(191, 255, 251,0.4), rgba(191, 255, 251, 0.1));
+}
+
+/**
+ * aside
+ */
+#item-nav {
+  float: left;
+  width: 180px;
+}
+
+.nav-icon {
+  color: #333C4D;
+  padding: 20px;
+  text-align: center;
+}
+
+/**
+ * main navigation
+ */
+.main-nav-btn {
+  background: none;
+  border-top: 1px solid #333C4D;
+  color: #243837;
+  display: block;
+  padding: 20px;
+  text-align: left;
+  text-decoration: none;
+}
+
+.main-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.8);
+  color: #624630;
+}
+
+.main-nav-btn.active {
+  background: rgba(247, 243, 225, 0.7);
+  color: #624630;
+}
+
+.main-nav-btn i {
+  width: 20px
+}
+
+/**
+ * itme list
+ */
+#item-list {
+  background: rgba(247, 243, 225, 0.7);
+  color: #624630;
+  list-style: none;
+  margin-left: 180px;
+  min-height: 304px;
+  padding:10px;
+}
+
+#item-list .notice {
+  font-size: 16px;
+  padding: 60px;
+  text-align: center;
+}
+/**
+ * item
+ */
+.item {
+  align-items: center;
+  border-bottom: 1px solid rgba(200, 200, 200, 0.8);
+  display: flex;
+  margin:10px;
+  padding: 15px;
+  transition: background-color 500ms linear;
+}
+
+.item:last-child {
+  border: none;
+}
+
+.item:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transition: background-color 100ms linear;
+}
+
+.item img {
+  border: 1px solid #FFFFFF;
+  height: 80px;
+  width: 80px;
+}
+
+.item>div:first-of-type {
+  flex: 1;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.item-name {
+  color: #624630;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.item-name:hover {
+  text-decoration: underline;
+}
+
+.item-address {
+  line-height: 20px;
+  padding-right: 20px;
+  text-align: right;
+}
+
+.stars {
+  align-items: center;
+  display: flex;
+  padding-top: 10px;
+}
+
+.fav-link {
+  border-left: 1px solid rgba(200, 200, 200, 0.8);
+  cursor: pointer;
+  line-height: 60px;
+  text-align: center;
+  width: 60px;
+}
+
+.fav-link:hover {
+  color: #F13F3F;
+}
+/**
+ * footer section
+ */
+footer {
+  background: rgba(219, 225, 225, 0.5);
+  font-size: 0.8em;
+  height: 200px;
+  position: relative;
+}
+
+footer p{
+  text-align: center;
+}
+
+footer p.title {
+  font-size: 1.2em;
+  padding: 15px;
+}
+
+footer ul {
+  align-items: center;
+  display: flex;
+  padding: 20px;
+}
+
+footer ul li{
+  flex: 1;
+}
